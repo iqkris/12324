@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Общий блокнот</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <p class="badge">Общий блокнот</p>
+        <h1>Записи, изображения и рисунки — в одном месте</h1>
+        <p class="subhead">
+          Делитесь заметками с любого устройства. Все записи синхронизируются
+          через облако Firebase и доступны всем участникам.
+        </p>
+      </div>
+      <div class="hero-card">
+        <h2>Как подключить синхронизацию</h2>
+        <ol>
+          <li>Создайте проект в Firebase.</li>
+          <li>Включите Cloud Firestore.</li>
+          <li>Скопируйте настройки в <code>script.js</code>.</li>
+        </ol>
+        <button class="secondary" id="copyGuide">Скопировать инструкцию</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="composer">
+        <div class="composer-head">
+          <h2>Новая запись</h2>
+          <div class="toolbar">
+            <label class="toggle">
+              <input type="checkbox" id="pinToggle" />
+              <span>Закрепить</span>
+            </label>
+            <button id="clearCanvas" class="secondary">Очистить рисунок</button>
+          </div>
+        </div>
+
+        <div class="composer-grid">
+          <div class="field">
+            <label for="title">Заголовок</label>
+            <input id="title" type="text" placeholder="Например: Идея для заметки" />
+          </div>
+          <div class="field">
+            <label for="author">Автор</label>
+            <input id="author" type="text" placeholder="Ваше имя" />
+          </div>
+          <div class="field full">
+            <label for="message">Текст записи</label>
+            <textarea
+              id="message"
+              rows="4"
+              placeholder="Запишите мысль, список задач или впечатление"
+            ></textarea>
+          </div>
+          <div class="field full">
+            <label for="image">Добавить изображение</label>
+            <input id="image" type="file" accept="image/*" />
+            <p class="hint">Изображение будет сохранено как ссылка в базе.</p>
+          </div>
+        </div>
+
+        <div class="canvas-wrap">
+          <div class="canvas-header">
+            <div>
+              <h3>Рисунок</h3>
+              <p>Рисуйте пальцем или мышью и сохраните вместе с записью.</p>
+            </div>
+            <div class="brush">
+              <label for="color">Цвет</label>
+              <input id="color" type="color" value="#1f6feb" />
+              <label for="size">Толщина</label>
+              <input id="size" type="range" min="2" max="24" value="6" />
+            </div>
+          </div>
+          <canvas id="canvas" width="800" height="320"></canvas>
+        </div>
+
+        <div class="actions">
+          <button id="publish">Опубликовать запись</button>
+          <button id="saveLocal" class="secondary">Сохранить локально</button>
+        </div>
+
+        <div class="status" id="status"></div>
+      </section>
+
+      <section class="feed">
+        <div class="feed-head">
+          <h2>Лента записей</h2>
+          <div class="filters">
+            <button class="chip active" data-filter="all">Все</button>
+            <button class="chip" data-filter="pinned">Закреплённые</button>
+            <button class="chip" data-filter="mine">Мои</button>
+          </div>
+        </div>
+        <div id="notes" class="notes"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="noteTemplate">
+    <article class="note">
+      <header>
+        <div>
+          <h3 class="note-title"></h3>
+          <p class="note-meta"></p>
+        </div>
+        <span class="pin">Закреплено</span>
+      </header>
+      <p class="note-text"></p>
+      <img class="note-image" alt="Прикреплённое изображение" />
+      <img class="note-drawing" alt="Рисунок" />
+      <footer>
+        <button class="secondary note-copy">Скопировать текст</button>
+      </footer>
+    </article>
+  </template>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
